@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8">
+		<script type="text/javascript" language="script" src="index.js"></script>
+		<link rel="stylesheet" type="text/css" href="index.css" />
+	</head>
+	<body>
+		<div class="fundo">
+			<h1>
+				Calculador de notas - Boletim
+			</h1>
+			<hr />
+			<form action="javascript:calcular_boletim();">
+				<input type="text" id="materi" placeholder="Digite a matéria" required /><br />
+				<input type="text" id="1acert" placeholder="Nota 1a Cert" required /><br />
+				<input type="text" id="2acert" placeholder="Nota 2a Cert" required /><br />
+				<input type="text" id="3acert" placeholder="Nota 3a Cert" required /><br />
+
+				<input type="submit" value="calcular" />
+			</form>
+
+			<br /><br /><br />
+			<div id="result" style="display:none;">
+				<h3>Notas</h3><br />
+				<table id="tablela">
+					<tr>
+						<th>Matéria</th>
+						<th>1a Cert</th>
+						<th>2a Cert</th>
+						<th>3a Cert</th>
+						<th>Média</th>
+					</tr>
+				</table>
+			</div>											
+		</div>
+	</body>	
+</html>	

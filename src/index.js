@@ -2,6 +2,8 @@
 var PESO_1A_CERT = 3;
 var PESO_2A_CERT = 3;
 var PESO_3A_CERT = 4;
+var MEDIA_MINIMA = 6;
+
 var valores = {};
 var i=0;
 function calcular_boletim()
@@ -33,7 +35,8 @@ function calcular_boletim()
 	valores[i] = mate;
 	i++;
 
-	var media = (_1a * PESO_1A_CERT + _2a * PESO_2A_CERT + _3a * PESO_3A_CERT ) / 10.0;
+	var media = (_1a * PESO_1A_CERT + _2a * PESO_2A_CERT + _3a * PESO_3A_CERT ) /
+	(PESO_1A_CERT + PESO_2A_CERT + PESO_3A_CERT));
 
 	var table = document.getElementById('tablela');
 
@@ -73,6 +76,6 @@ function calcular_boletim()
 }
 
 function color(nota){
-	if(nota < 6)return "red";
-	else if(nota >= 6)return "blue";
+	if(nota < MEDIA_MINIMA)return "red";
+	else if(nota >= MEDIA_MINIMA)return "blue";
 }

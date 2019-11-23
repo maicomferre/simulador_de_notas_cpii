@@ -36,7 +36,7 @@ function calcular_boletim()
 	i++;
 
 	var media = (_1a * PESO_1A_CERT + _2a * PESO_2A_CERT + _3a * PESO_3A_CERT ) /
-	(PESO_1A_CERT + PESO_2A_CERT + PESO_3A_CERT));
+	(PESO_1A_CERT + PESO_2A_CERT + PESO_3A_CERT);
 
 	var table = document.getElementById('tablela');
 

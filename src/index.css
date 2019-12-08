@@ -1,31 +1,26 @@
+@charset "UTF-8";
+
 body{
-	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAIAAAB7QOjdAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAOSURBVBhXYwCC////AwAGAQL+JDrNNwAAAABJRU5ErkJggg==');
+	background:linear-gradient(rgb(45, 95, 224),rgb(64, 112, 237));
+	height:100vh;
 }
 
+table{
+	position:relative;
+	margin:0 auto;
+	background-color:#FFF;
+	top:10vw;
+}
 input{
-	padding:10px;
-	margin:10px;
-	font-size:22px;
-	border-radius:2px;
-	z-index:999;
+	border:none;
+	outline:none;
+	text-align: center;
 }
-
+td{text-align:center;}
 th{
-	background-color:#D2691E;
-	background: linear-gradient(#D2691E	,#F4A460); 
-	padding:3px;
-	border-radius:2px;
-	user-select:none;
-	letter-spacing: 1px;
+	background-color:rgb(175, 186, 58);
+	background:linear-gradient(rgb(175, 186, 58),rgb(176, 167, 42));
 }
-
-table,tr,td{
-	border:1px solid #CCC;
-	padding:10px;
-	margin:10px;
-	background-color: #FFF;
-}
-td:hover{
-	background-color: #CCC;
-	cursor:pointer;
+input[placeholder="Apoio"]{
+	color:#CC3311;
 }

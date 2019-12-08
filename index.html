@@ -1,39 +1,51 @@
-<!doctype html>
-<html>
-	<head>
-		<title></title>
-		<meta charset="utf-8">
-		<script type="text/javascript" language="script" src="src/index.js"></script>
-		<link rel="stylesheet" type="text/css" href="src/index.css" />
-	</head>
-	<body>
-		<div class="fundo">
-			<h1>
-				Calculador de notas - Boletim
-			</h1>
-			<hr />
-			<form action="javascript:calcular_boletim();">
-				<input type="text" id="materi" placeholder="Digite a matéria" required /><br />
-				<input type="text" id="1acert" placeholder="Nota 1a Cert" required /><br />
-				<input type="text" id="2acert" placeholder="Nota 2a Cert" required /><br />
-				<input type="text" id="3acert" placeholder="Nota 3a Cert" required /><br />
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>CPII - SIMULADOR NOTAS</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="src/index.css" />
+        <script type="text/javascript" src="src/index.js"></script>
+        <meta name="author" content="Maicom Ferreira" />
+        <meta name="description" content="Simulador de notas interativo cpii,Simulador Notas Pedro II, Pedro II" />
+        <meta name="keywords" content="pedro II,boletim,notas" />
+        <meta http-equiv="content-language" content="pt-br" />
+        <meta name="robots" content="all"> 
+        <meta name="rating" content="general" />
+    </head>
+    <body onLoad="load_table();">
+        <table border="1" id="load_obj">
+            <tr>
+                <th rowspan="2">Disciplina</th>
+                <th colspan="3">1a. Cert</th>
+                <th colspan="3">2a. Cert</th>
+                <th colspan="3">3a. Cert</th>
+                <th colspan="3">Resultado Final</th>
+            </tr>
+            <tr>
+                <th>Graus</th>
+                <th>Apoio</th>
+                <th>Média</th>
 
-				<input type="submit" value="calcular" />
-			</form>
+                <th>Graus</th>
+                <th>Apoio</th>
+                <th>Média</th>
 
-			<br /><br /><br />
-			<div id="result" style="display:none;">
-				<h3>Notas</h3><br />
-				<table id="tablela">
-					<tr>
-						<th>Matéria</th>
-						<th>1a Cert</th>
-						<th>2a Cert</th>
-						<th>3a Cert</th>
-						<th>Média</th>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</body>
-</html>
+                <th>Graus</th>
+                <th>Apoio</th>
+                <th>Média</th>
+
+                <th>MA</th>
+                <th>PFV</th>
+                <th>MF</th>
+            </tr>
+                <!--
+                    <tr>
+                        <td id="texto_"><input type="text" id="texto_input_" placeholder="Disciplina" /></td>
+                        <td id="graus_"><input type="text" id="graus_input_" placeholder="Graus" /></td>
+                        <td id="apoio_"><input type="text" id="apoio_input_" placeholder="Apoio" /></td>
+                        <td id="media_"><input type="text" id="media_input_" placeholder="Média" /></td>
+                    </tr>
+                -->
+        </table>
+    </body>
+</html> 

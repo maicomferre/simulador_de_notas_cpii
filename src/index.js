@@ -122,10 +122,16 @@ function calcular_notas()
 				
 				if(notas[i].cert1.apoio != '')
 				{
-					notas[i].cert1.apoio = c1_apoio.value;
-					var calc = ((parseFloat(notas[i].cert1.graus) + parseFloat(notas[i].cert1.apoio)) / 2.0).toFixed(2);
-					notas[i].cert1.media = calc;
-					c1_media.innerHTML = notas[i].cert1.media;
+					if(parseFloat(notas[i].cert1.apoio) > parseFloat(notas[i].cert1.graus))
+					{
+						var calc = ((parseFloat(notas[i].cert1.graus) + parseFloat(notas[i].cert1.apoio)) / 2.0).toFixed(2);
+						notas[i].cert1.media = calc;
+						c1_media.innerHTML = notas[i].cert1.media;
+					}
+					else{
+						c1_media.innerHTML = notas[i].cert1.graus;
+						notas[i].cert1.media = notas[i].cert1.graus;
+					}
 				}
 				else
 					c1_media.innerHTML = '';
@@ -137,6 +143,7 @@ function calcular_notas()
 				notas[i].cert1.media = notas[i].cert1.graus;
 				c1_media.innerHTML = notas[i].cert1.media != '' ? notas[i].cert1.media : '';
 			}
+
 		}
 		else{
 			
@@ -161,9 +168,12 @@ function calcular_notas()
 				
 				if(notas[i].cert2.apoio != '')
 				{
-					notas[i].cert2.apoio = c2_apoio.value;
-					var calc = ((parseFloat(notas[i].cert2.graus) + parseFloat(notas[i].cert2.apoio)) / 2).toFixed(2);
-					notas[i].cert2.media = calc;
+					if(notas[i].cert2.apoio > notas[i].cert2.graus)
+					{
+						notas[i].cert2.apoio = c2_apoio.value;
+						var calc = ((parseFloat(notas[i].cert2.graus) + parseFloat(notas[i].cert2.apoio)) / 2).toFixed(2);
+						notas[i].cert2.media = calc;
+					}
 					c2_media.innerHTML = notas[i].cert2.media;
 				}
 				else
@@ -201,9 +211,12 @@ function calcular_notas()
 				
 				if(notas[i].cert3.apoio != '')
 				{
-					notas[i].cert3.apoio = c3_apoio.value;
-					var calc = ((parseFloat(notas[i].cert3.graus) + parseFloat(notas[i].cert3.apoio)) / 2).toFixed(2);
-					notas[i].cert3.media = calc;
+					if(notas[i].cert3.apoio > notas[i].cert3.graus)
+					{
+						notas[i].cert3.apoio = c3_apoio.value;
+						var calc = ((parseFloat(notas[i].cert3.graus) + parseFloat(notas[i].cert3.apoio)) / 2).toFixed(2);
+						notas[i].cert3.media = calc;
+					}
 					c3_media.innerHTML = notas[i].cert3.media;
 				}
 				else

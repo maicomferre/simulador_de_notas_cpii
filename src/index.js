@@ -8,9 +8,18 @@ var pesoPFV_ma = 3;
 var pesoPFV = 2; 
 var nota_minima_pfv = 5;
 var maximo_materias_coc = 3;
+var janela1 = undefined;
+var janela2 = undefined;
+var janela3 = undefined;
+var materias_em_apoio = 0;
+var default_table = '<tr><th rowspan="2">Disciplina</th><th colspan="3">1a. Cert</th><th colspan="3">2a. Cert</th><th colspan="3">3a. Cert</th><th colspan="3">Resultado Final</th></tr><tr><th>Graus</th><th>Apoio</th><th>Média</th><th>Graus</th><th>Apoio</th><th>Média</th><th>Graus</th><th>Apoio</th><th>Média</th><th>MA</th><th>PFV</th><th>MF</th></tr>';
+var clear_table = false;
 
 function load_table(){
     var x = document.getElementById('load_obj');
+    janela1 = document.getElementById('janela1');
+    janela2 = document.getElementById('janela2');
+    janela3 = document.getElementById('janela3');
     var html = "";
 
     for(var i=0; i<MATERIAS_NUM; i++)
@@ -18,9 +27,9 @@ function load_table(){
     	notas[i] = 
     	{
     		texto:"",
-    		cert1:{graus:0,apoio:-1,media:0,ok:false},
-    		cert2:{graus:0,apoio:-1,media:0,ok:false},
-    		cert3:{graus:0,apoio:-1,media:0,ok:false},
+    		cert1:{graus:0,apoio:-1,media:0,Emapoio:false},
+    		cert2:{graus:0,apoio:-1,media:0,Emapoio:false},
+    		cert3:{graus:0,apoio:-1,media:0,Emapoio:false},
     		final:{ma:0,pfv:-1,mf:0},
     		nota:false,
     	};
@@ -39,11 +48,17 @@ function load_table(){
                 <td id="media3_'+i+'" ></td>\
                 \
                 <td id="graus_'+i+'" ></td>\
-                <td id="apoio_'+i+'" ><input style="width:40px;display:none;" type="text" id="apoio_inputpfv_'+i+'" placeholder="Apoio" /></td>\
+                <td id="apoio_'+i+'" ><input style="width:40px;display:none;" value="" type="text" id="apoio_inputpfv_'+i+'" placeholder="Apoio" /></td>\
                 <td id="media_'+i+'" ></td>\
             </tr>';
     }
-    x.innerHTML = x.innerHTML +html;
+    
+    if(clear_table){
+    	x.innerHTML = default_table +html;
+    	clear_table = false;
+ 	}else{
+    	x.innerHTML = x.innerHTML +html;
+    }
 }
 
 document.addEventListener('input',function(inpt){
@@ -91,7 +106,7 @@ function calcular_notas()
 		//notas[i].cert3.media = ;
 
 		//notas[i].final.ma = ;
-		//notas[i].final.pfv = ;
+		notas[i].final.pfv = pfv.value;
 		//notas[i].final.mf = ;
 
 		if(c1_graus.value != '')
@@ -100,9 +115,11 @@ function calcular_notas()
 			{
 				if(c1_apoio.style.display == "none" ){
 					c1_apoio.style.display = "block";
-					c1_apoio.value = '';				
-					notas[i].cert1.ok_apoio=true
+					c1_apoio.value = '';					
 				}
+
+				notas[i].cert1.Emapoio=true;
+				
 				if(notas[i].cert1.apoio != '')
 				{
 					notas[i].cert1.apoio = c1_apoio.value;
@@ -118,7 +135,7 @@ function calcular_notas()
 				
 				c1_apoio.style.display = "none";
 				notas[i].cert1.media = notas[i].cert1.graus;
-				c1_media.innerHTML = notas[i].cert1.media.Length !== 0 ? notas[i].cert1.media : '';
+				c1_media.innerHTML = notas[i].cert1.media != '' ? notas[i].cert1.media : '';
 			}
 		}
 		else{
@@ -135,13 +152,14 @@ function calcular_notas()
 		{
 			if(notas[i].cert2.graus < nota_minima)
 			{
-				if(c2_apoio.style.display === "none" ){
+				if(c2_apoio.style.display == "none" ){
 					c2_apoio.style.display = "block";
-					c2_apoio.value = '';
-					
-									
+					c2_apoio.value = '';		
 				}
-				if(notas[i].cert2.apoio != 0)
+
+				notas[i].cert1.Emapoio=true;
+				
+				if(notas[i].cert2.apoio != '')
 				{
 					notas[i].cert2.apoio = c2_apoio.value;
 					var calc = ((parseFloat(notas[i].cert2.graus) + parseFloat(notas[i].cert2.apoio)) / 2).toFixed(2);
@@ -156,7 +174,7 @@ function calcular_notas()
 				
 				c2_apoio.style.display = "none";
 				notas[i].cert2.media = notas[i].cert2.graus;
-				c2_media.innerHTML = notas[i].cert2.media.Length !== 0 ? notas[i].cert2.media : '';
+				c2_media.innerHTML = notas[i].cert2.media != '' ? notas[i].cert2.media : '';
 			}
 		}
 		else{
@@ -174,13 +192,14 @@ function calcular_notas()
 		{
 			if(notas[i].cert3.graus < nota_minima)
 			{
-				if(c3_apoio.style.display === "none" ){
+				if(c3_apoio.style.display == "none" ){
 					c3_apoio.style.display = "block";
-					c3_apoio.value = '';
-					
-									
+					c3_apoio.value = '';			
 				}
-				if(notas[i].cert3.apoio != 0)
+
+				notas[i].cert1.Emapoio=true;
+				
+				if(notas[i].cert3.apoio != '')
 				{
 					notas[i].cert3.apoio = c3_apoio.value;
 					var calc = ((parseFloat(notas[i].cert3.graus) + parseFloat(notas[i].cert3.apoio)) / 2).toFixed(2);
@@ -210,37 +229,50 @@ function calcular_notas()
 
 		if(notas[i].cert1.media != '' && notas[i].cert2.media != '' && notas[i].cert3.media != '')
 		{
-			var calc = ((notas[i].cert1.media * PESO1 + notas[i].cert2.media * PESO2 + notas[i].cert3.media * PESO3) / (PESO1+PESO2+PESO3)).toFixed(2);
+			var calc = (parseFloat(notas[i].cert1.media * PESO1 + notas[i].cert2.media * PESO2 + notas[i].cert3.media * PESO3) / parseFloat(PESO1+PESO2+PESO3)).toFixed(2);
 			notas[i].final.ma = calc;
 			ma.innerHTML = notas[i].final.ma;
 			if(calc < nota_minima)
 			{
-				if(notas[i].final.pfv.Length != '')
+				pfv.style.display = "block";
+				if(notas[i].final.pfv != '')
 				{
-					pfv.style.display = "block";
-					calc = (( notas[i].final.ma * pesoPFV_ma ) + ( notas[i].final.pfv  * pesoPFV))  / (pesoPFV + pesoPFV_ma);
-					mf.innerHTML = notas[i].final.mf = calc;
+					calc = (parseFloat( notas[i].final.ma * pesoPFV_ma ) + parseFloat( notas[i].final.pfv  * pesoPFV))  / parseFloat(pesoPFV + pesoPFV_ma);
+					notas[i].final.mf = calc;
+					mf.innerHTML = notas[i].final.mf.toFixed(2);
 				}
+				else
+					mf.innerHTML = '';
 			}
 			else
 			{
 				pfv.style.display = "none";
 				notas[i].final.mf = notas[i].final.ma;
-				mf.innerHTML = notas[i].final.mf;
+				mf.innerHTML = parseFloat(notas[i].final.mf).toFixed(2);
 			}
 		}
 		else
 		{
-			pfv.style.display = "none";			
+			pfv.style.display = "none";
+			pfv.value = '';
 			ma.innerHTML = '';
 			mf.innerHTML = '';
 		}
 
 		setDefaultColor(ma,notas[i].final.ma);
 		setDefaultColor(pfv,notas[i].final.pfv,true);
-		setDefaultColor(mf,notas[i].final.ma);
+		setDefaultColor(mf,notas[i].final.mf,true);
 	}
+	var temp_apoio = 0;
+	for(var i=0; i<MATERIAS_NUM; i++)
+	{
+		if(!notas[i].cert1.Emapoio && !notas[i].cert1.Emapoio && !notas[i].cert1.Emapoio)continue;
+		temp_apoio++;
+	}
+	materias_em_apoio = temp_apoio;
+
 }
+
 function setDefaultColor(element,nota,pfv=false)
 {
 	if(!pfv)
@@ -255,6 +287,38 @@ function setDefaultColor(element,nota,pfv=false)
 		if(nota >= nota_minima_pfv)
 			element.style.color = 'blue';
 		if(nota < nota_minima_pfv)
-			element.style.color = 'red';		
+			element.style.color = 'red';
+	}
+}
+
+function abrir_janela(obj_janela)
+{
+	switch(obj_janela)
+	{
+		case 'verificar_condicao':
+			janela1.style.display = 'block';
+			break;
+		case 'importar_notas':
+			janela2.style.display = 'block';
+			break;
+		default:
+			console.log("abrir_janela("+janela+"): Parametro inválido.");
+	}
+}
+function limpar_tabela(){
+	clear_table = true;
+	load_table();
+}
+
+function tabela_propriedade(info)
+{
+	switch(info)
+	{
+		case 'MsApoio':
+			if(!MsApoio_Mensagem)
+				janela3.style.display = 'block';
+		break;
+		default:
+			console.log("tabela_propriedade("+info+"): Parametro inválido.");
 	}
 }

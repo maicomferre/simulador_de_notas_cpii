@@ -38,14 +38,48 @@
                 <th>PFV</th>
                 <th>MF</th>
             </tr>
-                <!--
-                    <tr>
-                        <td id="texto_"><input type="text" id="texto_input_" placeholder="Disciplina" /></td>
-                        <td id="graus_"><input type="text" id="graus_input_" placeholder="Graus" /></td>
-                        <td id="apoio_"><input type="text" id="apoio_input_" placeholder="Apoio" /></td>
-                        <td id="media_"><input type="text" id="media_input_" placeholder="Média" /></td>
-                    </tr>
-                -->
+            <!--
+                <tr>
+                    <td id="texto_"><input type="text" id="texto_input_" placeholder="Disciplina" /></td>
+                    <td id="graus_"><input type="text" id="graus_input_" placeholder="Graus" /></td>
+                    <td id="apoio_"><input type="text" id="apoio_input_" placeholder="Apoio" /></td>
+                    <td id="media_"><input type="text" id="media_input_" placeholder="Média" /></td>
+                </tr>
+            -->
         </table>
+        <div class="opcoes">
+            <div class="btn_title">Opções - <span style="color:red;">Indisponível</span></div>
+            <div class="btn hidden" onClick="abrir_janela('verificar_condicao');">Verificar Condição</div>
+            <div class="btn" onClick="abrir_janela('importar_notas');">Importar Notas</div>
+            <div class="btn" onClick="limpar_tabela();">Limpar Tabela</div>
+            <div class="btn" onClick="tabela_propriedade('adicionar_nova_linha');">Adicionar 1 linha</div>
+            <div class="btn" onClick="tabela_propriedade('adicionar_nova_linha');">Remover 1 linha</div>
+            <div class="btn" onClick="tabela_propriedade('MsApoio');">Mostrar/Esconder Apoio<div>
+        </div>
+        <div class="janela" id="janela1" style="display:none;">
+            <span onClick="janela1.style.display = 'none'" id="botaoX"> X </span>
+            <h1 id="janela_title">Aguarde Carregando</h1>
+        </div>
+        <div class="janela" id="janela2" style="display:none;">
+            <span onClick="janela2.style.display = 'none'" id="botaoX"> X </span>
+            <h1 id="janela_title">Importar Notas do Site</h1><hr />
+            <div class="alert"><b>Atenção!</b> Nosso sistema de importação de notas é automatizado e precisa de seus dados de login para se conectar ao site e conseguir o boletim. Apesar de nossos esforços de tentar fazer de forma segura nós não podemos garantir, portanto ao realizar está ação você está concordando que nós não somos responsáveis por qualquer dano devido a vazamento de informações. Não gravamos sua matrícula/senha em nossos bancos de dados e utilizamos criptografia SSL durante a conexão. Entenda como nosso sistema funciona <a href="faq/importacao-de-boletim.html">aqui</a></div>
+            <br /><br /><br />
+
+            <form action="src/server/importar_notas_do_site.php" method="post">
+                <label for="matricula">Matrícula</label><br />
+                <input type="text" id="matricula" placeholder="Matrícula" />
+                <br /><br />
+                <label for="senha">Senha</label><br />
+                <input type="password" id="senha" placeholder="Senha" />
+                <br /><br />
+                <input type="submit" value="Entrar" />
+            </form>
+            <br />
+            <div class="alert" style="background-color:rgba(50,50,200,7);color:#FFF;"><i>Recomendação:</i> No site do colégio, crie uma senha destinada a ser utilizada somente ali</div>
+        </div>
+        <div class="janela" id="janela3" style="display: none;">
+
+        </div>
     </body>
 </html> 

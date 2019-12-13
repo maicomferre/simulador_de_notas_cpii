@@ -12,14 +12,17 @@ var janela1 = undefined;
 var janela2 = undefined;
 var janela3 = undefined;
 var materias_em_apoio = 0;
-var default_table = '<tr><th rowspan="2">Disciplina</th><th colspan="3">1a. Cert</th><th colspan="3">2a. Cert</th><th colspan="3">3a. Cert</th><th colspan="3">Resultado Final</th></tr><tr><th>Graus</th><th>Apoio</th><th>Média</th><th>Graus</th><th>Apoio</th><th>Média</th><th>Graus</th><th>Apoio</th><th>Média</th><th>MA</th><th>PFV</th><th>MF</th></tr>';
+var default_table = '<tr><th rowspan="2">Disciplina</th><th colspan="3">1a. Cert</th><th colspan="3">2a. Cert</th><th colspan="3">3a. Cert</th><th colspan="3">Resultado Final</th></tr><tr><th>Graus</th><th class="th_apoio">Apoio</th><th>Média</th><th>Graus</th><th class="th_apoio">Apoio</th><th>Média</th><th>Graus</th><th class="th_apoio">Apoio</th><th>Média</th><th>MA</th><th>PFV</th><th>MF</th></tr>';
 var clear_table = false;
+var MsApoio_Mensagem = false;
+var GLOBAL_TD_APOIO = undefined;
 
 function load_table(){
     var x = document.getElementById('load_obj');
     janela1 = document.getElementById('janela1');
     janela2 = document.getElementById('janela2');
     janela3 = document.getElementById('janela3');
+    GLOBAL_TD_APOIO = document.getElementsByClassName('td_apoio');
     var html = "";
 
     for(var i=0; i<MATERIAS_NUM; i++)
@@ -36,15 +39,15 @@ function load_table(){
         html += '<tr>\
                 <td id="texto_'+i+'" ><input style="width:220px;" type="text" id="texto_input_'+i+'" placeholder="Disciplina" /></td>\
                 <td id="graus1_'+i+'" ><input style="width:40px;" type="text" id="graus_input1_'+i+'" placeholder="Graus" /></td>\
-                <td id="apoio1_'+i+'" ><input style="width:40px;display:none;color:" type="text" id="apoio_input1_'+i+'" placeholder="Apoio" /></td>\
+                <td id="apoio1_'+i+'" class="td_apoio"><input style="width:40px;display:none;color:" type="text" id="apoio_input1_'+i+'" placeholder="Apoio" /></td>\
                 <td id="media1_'+i+'" ></td>\
                 \
                 <td id="graus2_'+i+'" ><input style="width:40px;" type="text" id="graus_input2_'+i+'" placeholder="Graus" /></td>\
-                <td id="apoio2_'+i+'" ><input style="width:40px;display:none;" type="text" id="apoio_input2_'+i+'" placeholder="Apoio" /></td>\
+                <td id="apoio2_'+i+'" class="td_apoio"><input style="width:40px;display:none;" type="text" id="apoio_input2_'+i+'" placeholder="Apoio" /></td>\
                 <td id="media2_'+i+'" ></td>\
                 \
                 <td id="graus3_'+i+'" ><input style="width:40px;" type="text" id="graus_input3_'+i+'" placeholder="Graus" /></td>\
-                <td id="apoio3_'+i+'" ><input style="width:40px;display:none;" type="text" id="apoio_input3_'+i+'" placeholder="Apoio" /></td>\
+                <td id="apoio3_'+i+'" class="td_apoio"><input style="width:40px;display:none;" type="text" id="apoio_input3_'+i+'" placeholder="Apoio" /></td>\
                 <td id="media3_'+i+'" ></td>\
                 \
                 <td id="graus_'+i+'" ></td>\
@@ -328,9 +331,17 @@ function tabela_propriedade(info)
 	switch(info)
 	{
 		case 'MsApoio':
-			if(!MsApoio_Mensagem)
-				janela3.style.display = 'block';
-		break;
+			var colspan = document.querySelectorAll('[class="th_apoio"]');
+			if(!MsApoio_Mensagem){
+				Array.prototype.forEach.call(colspan,function(x){x.setAttribute("colspan","2")});
+				Array.prototype.forEach.call(GLOBAL_TD_APOIO,function(x){x.style.display = 'none';});
+			}
+			else{
+				Array.prototype.forEach.call(colspan,function(x){x.setAttribute("colspan","3")});
+				Array.prototype.forEach.call(GLOBAL_TD_APOIO,function(x){x.style.display = 'block';});
+			}
+			MsApoio_Mensagem = !MsApoio_Mensagem;
+			break;
 		default:
 			console.log("tabela_propriedade("+info+"): Parametro inválido.");
 	}

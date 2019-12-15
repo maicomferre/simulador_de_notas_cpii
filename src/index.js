@@ -16,9 +16,12 @@ var default_table = '<tr><th rowspan="2">Disciplina</th><th colspan="3">1a. Cert
 var clear_table = false;
 var MsApoio_Mensagem = false;
 var GLOBAL_TD_APOIO = undefined;
+var tablea_objeto = undefined;
+
 
 function load_table(){
-    var x = document.getElementById('load_obj');
+	tablea_objeto = document.getElementById('load_obj');;
+    var x = tablea_objeto;
     janela1 = document.getElementById('janela1');
     janela2 = document.getElementById('janela2');
     janela3 = document.getElementById('janela3');
@@ -36,24 +39,7 @@ function load_table(){
     		final:{ma:0,pfv:-1,mf:0},
     		nota:false,
     	};
-        html += '<tr>\
-                <td id="texto_'+i+'" ><input style="width:220px;" type="text" id="texto_input_'+i+'" placeholder="Disciplina" /></td>\
-                <td id="graus1_'+i+'" ><input style="width:40px;" type="text" id="graus_input1_'+i+'" placeholder="Graus" /></td>\
-                <td id="apoio1_'+i+'" class="td_apoio"><input style="width:40px;display:none;color:" type="text" id="apoio_input1_'+i+'" placeholder="Apoio" /></td>\
-                <td id="media1_'+i+'" ></td>\
-                \
-                <td id="graus2_'+i+'" ><input style="width:40px;" type="text" id="graus_input2_'+i+'" placeholder="Graus" /></td>\
-                <td id="apoio2_'+i+'" class="td_apoio"><input style="width:40px;display:none;" type="text" id="apoio_input2_'+i+'" placeholder="Apoio" /></td>\
-                <td id="media2_'+i+'" ></td>\
-                \
-                <td id="graus3_'+i+'" ><input style="width:40px;" type="text" id="graus_input3_'+i+'" placeholder="Graus" /></td>\
-                <td id="apoio3_'+i+'" class="td_apoio"><input style="width:40px;display:none;" type="text" id="apoio_input3_'+i+'" placeholder="Apoio" /></td>\
-                <td id="media3_'+i+'" ></td>\
-                \
-                <td id="graus_'+i+'" ></td>\
-                <td id="apoio_'+i+'" ><input style="width:40px;display:none;" value="" type="text" id="apoio_inputpfv_'+i+'" placeholder="Apoio" /></td>\
-                <td id="media_'+i+'" ></td>\
-            </tr>';
+        html += get_line_text(i);
     }
     
     if(clear_table){
@@ -129,12 +115,11 @@ function calcular_notas()
 					{
 						var calc = ((parseFloat(notas[i].cert1.graus) + parseFloat(notas[i].cert1.apoio)) / 2.0).toFixed(2);
 						notas[i].cert1.media = calc;
-						c1_media.innerHTML = notas[i].cert1.media;
 					}
-					else{
-						c1_media.innerHTML = notas[i].cert1.graus;
+					else
 						notas[i].cert1.media = notas[i].cert1.graus;
-					}
+
+					c1_media.innerHTML = notas[i].cert1.media;
 				}
 				else
 					c1_media.innerHTML = '';
@@ -176,8 +161,11 @@ function calcular_notas()
 						notas[i].cert2.apoio = c2_apoio.value;
 						var calc = ((parseFloat(notas[i].cert2.graus) + parseFloat(notas[i].cert2.apoio)) / 2).toFixed(2);
 						notas[i].cert2.media = calc;
+					}else{
+						notas[i].cert2.media = notas[i].cert2.graus;
 					}
 					c2_media.innerHTML = notas[i].cert2.media;
+
 				}
 				else
 					c2_media.innerHTML = '';
@@ -220,6 +208,9 @@ function calcular_notas()
 						var calc = ((parseFloat(notas[i].cert3.graus) + parseFloat(notas[i].cert3.apoio)) / 2).toFixed(2);
 						notas[i].cert3.media = calc;
 					}
+					else
+						notas[i].cert3.media = notas[i].cert3.graus;
+
 					c3_media.innerHTML = notas[i].cert3.media;
 				}
 				else
@@ -333,16 +324,52 @@ function tabela_propriedade(info)
 		case 'MsApoio':
 			var colspan = document.querySelectorAll('[class="th_apoio"]');
 			if(!MsApoio_Mensagem){
+				document.getElementById('MsApoio').innerHTML = 'Mostrar Apoio';
 				Array.prototype.forEach.call(colspan,function(x){x.setAttribute("colspan","2")});
 				Array.prototype.forEach.call(GLOBAL_TD_APOIO,function(x){x.style.display = 'none';});
 			}
 			else{
+				document.getElementById('MsApoio').innerHTML = 'Esconder Apoio';
 				Array.prototype.forEach.call(colspan,function(x){x.setAttribute("colspan","3")});
 				Array.prototype.forEach.call(GLOBAL_TD_APOIO,function(x){x.style.display = 'block';});
 			}
 			MsApoio_Mensagem = !MsApoio_Mensagem;
 			break;
+		case 'adicionar_nova_linha':
+			MATERIAS_NUM++;
+			tablea_objeto.innerHTML = tablea_objeto.innerHTML +  get_line_text(MATERIAS_NUM-1);
+			break;
+		case 'remover_linha':
+			MATERIAS_NUM--;
+			var node = document.getElementById('tr_id_'+(MATERIAS_NUM));
+			if (node.parentNode)
+			  node.parentNode.removeChild(node);
+			else
+				node.style.display = 'none';	
+			break;
 		default:
 			console.log("tabela_propriedade("+info+"): Parametro inválido.");
 	}
+}
+
+function get_line_text(i)
+{
+	return  '<tr id="tr_id_'+i+'">\
+                <td id="texto_'+i+'" ><input style="width:220px;" type="text" id="texto_input_'+i+'" placeholder="Disciplina" /></td>\
+                <td id="graus1_'+i+'" ><input style="width:40px;" type="text" id="graus_input1_'+i+'" placeholder="Graus" /></td>\
+                <td id="apoio1_'+i+'" class="td_apoio"><input style="width:40px;display:none;color:" type="text" id="apoio_input1_'+i+'" placeholder="Apoio" /></td>\
+                <td id="media1_'+i+'" ></td>\
+                \
+                <td id="graus2_'+i+'" ><input style="width:40px;" type="text" id="graus_input2_'+i+'" placeholder="Graus" /></td>\
+                <td id="apoio2_'+i+'" class="td_apoio"><input style="width:40px;display:none;" type="text" id="apoio_input2_'+i+'" placeholder="Apoio" /></td>\
+                <td id="media2_'+i+'" ></td>\
+                \
+                <td id="graus3_'+i+'" ><input style="width:40px;" type="text" id="graus_input3_'+i+'" placeholder="Graus" /></td>\
+                <td id="apoio3_'+i+'" class="td_apoio"><input style="width:40px;display:none;" type="text" id="apoio_input3_'+i+'" placeholder="Apoio" /></td>\
+                <td id="media3_'+i+'" ></td>\
+                \
+                <td id="graus_'+i+'" ></td>\
+                <td id="apoio_'+i+'" ><input style="width:40px;display:none;" value="" type="text" id="apoio_inputpfv_'+i+'" placeholder="Apoio" /></td>\
+                <td id="media_'+i+'" ></td>\
+            </tr>';
 }

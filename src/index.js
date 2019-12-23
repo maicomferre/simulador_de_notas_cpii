@@ -331,7 +331,7 @@ function tabela_propriedade(info)
 			else{
 				document.getElementById('MsApoio').innerHTML = 'Esconder Apoio';
 				Array.prototype.forEach.call(colspan,function(x){x.setAttribute("colspan","3")});
-				Array.prototype.forEach.call(GLOBAL_TD_APOIO,function(x){x.style.display = 'block';});
+				Array.prototype.forEach.call(GLOBAL_TD_APOIO,function(x){x.style.display = 'block';x.style.width = "40px"});
 			}
 			MsApoio_Mensagem = !MsApoio_Mensagem;
 			break;
